@@ -1,0 +1,39 @@
+@package com.asefa.service.multitarificacion.etica.api.controller;
+
+import com.asefa.service.common.metadata.bean.MetadataUtil;
+import com.asefa.service.multitarificacion.etica.service.domain.api.ConsultaMultiTarifaResponse;
+import com.asefa.service.multitarificacion.etica.service.domain.api.MultiTarifaRequest;
+import com.asefa.service.multitarificacion.etica.service.domain.api.MultiTarifaHashResponse;
+import com.asefa.service.multitarificacion.etica.service.domain.api.MultiTarifaResponse;
+import com.asefa.service.multitarificacion.etica.service.domain.business.input.ConsultaMultiTarifaInput;
+import com.asefa.service.multitarificacion.etica.service.impl.MultiTarificacionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
+
+
+/**
+ * Created by FJGMATEU
+ */
+@RestController
+public class ShipmentController {
+
+    @Autowired
+    private ShipmentService shipmentService;
+
+
+    @CrossOrigin
+    @RequestMapping(value = "/shipment/{reference}", method = RequestMethod.GET)
+    public Shipment find(@PathVariable("reference") String reference) {
+        return shipmentService.find(reference);
+    }
+
+
+    @CrossOrigin
+    @RequestMapping(value = "/shipments", method = RequestMethod.GET)
+    public List<Shipment> findAll() {
+        return shipmentService.findAll();
+    }
+
+
+}

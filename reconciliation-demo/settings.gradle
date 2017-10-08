@@ -1,0 +1,5 @@
+rootProject.name = 'reconciliation-demo'
+
+include 'reconciliation-api'
+include 'reconciliation-service'
+include 'reconciliation-data'

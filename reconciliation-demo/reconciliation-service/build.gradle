@@ -1,0 +1,40 @@
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+apply plugin: 'maven-publish'
+
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE")
+	}
+}
+
+jar {
+	baseName = 'reconciliation-service'
+}
+
+dependencies {
+
+    compile project(":reconciliation-data")
+
+
+	compile("org.springframework.boot:spring-boot-starter:${springBootVersion}")
+	compile group: 'org.springframework', name: 'spring-web', version: '4.3.0.RELEASE'
+
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.4'
+	compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+	compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
+	testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+
+
+

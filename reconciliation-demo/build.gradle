@@ -1,0 +1,27 @@
+group 'com.reconciliation.demo'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+	group 'com.reconciliation.demo'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        compile("org.apache.commons:commons-lang3:3.4")
+        compile("com.google.code.gson:gson:2.6.2")
+        compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    }
+
+}

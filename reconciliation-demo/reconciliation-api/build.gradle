@@ -7,10 +7,7 @@ buildscript {
     }
 
     repositories {
-        maven {
-            url "http://intcontinuades.asefa.es:8081/nexus/content/groups/public"
-        }
-        //mavenCentral()
+        mavenCentral()
     }
 
     dependencies {

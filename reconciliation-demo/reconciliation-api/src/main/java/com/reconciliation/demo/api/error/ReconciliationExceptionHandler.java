@@ -1,25 +1,26 @@
+package com.reconciliation.demo.api.error;
 
-import javax.persistence.EntityNotFoundException;
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataAccessException;
+
+import com.reconciliation.demo.service.exception.ServiceDataException;
+import com.reconciliation.demo.service.exception.ServiceValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-//import org.springframework.security.access.AccessDeniedException;
 
+/**
+ * Created by FJGMATEU
+ */
 @ControllerAdvice
 public class ReconciliationExceptionHandler extends ResponseEntityExceptionHandler {
 
-    public RestResponseEntityExceptionHandler() {
+    public ReconciliationExceptionHandler() {
         super();
     }
 
@@ -53,12 +54,12 @@ public class ReconciliationExceptionHandler extends ResponseEntityExceptionHandl
     }
 
 
-    // 404
+    // 204
 
     @ExceptionHandler(value = { ServiceDataException.class })
     protected ResponseEntity<Object> handleNotFound(final RuntimeException ex, final WebRequest request) {
-        final String bodyOfResponse = "This should be application specific";
-        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        final String bodyOfResponse = "No se ha encontrado datos";
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NO_CONTENT, request);
     }
 
 

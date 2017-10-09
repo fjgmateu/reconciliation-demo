@@ -3,6 +3,7 @@ package com.reconciliation.demo.data.config;
 import java.io.IOException;
 //import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 import com.mongodb.Mongo;
+import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

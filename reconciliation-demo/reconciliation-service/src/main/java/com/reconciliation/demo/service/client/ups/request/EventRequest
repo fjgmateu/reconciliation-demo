@@ -1,6 +1,9 @@
 package com.reconciliation.demo.service.client.ups.request;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *FJGMATEU
  */

@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.reconciliation.demo.data.config.DataConfig;
+import com.reconciliation.demo.service.validator.ValidatorBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,10 +23,10 @@ import java.util.List;
 
 @Import({DataConfig.class})
 @ComponentScan("com.reconciliation.demo.service")
-public class TarificacionProductoEticaServiceApplication {
+public class ReconciliationServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TarificacionProductoEticaServiceApplication.class, args);
+        SpringApplication.run(ReconciliationServiceApplication.class, args);
     }
 
     @Bean

@@ -1,5 +1,6 @@
 package com.reconciliation.demo.api.config;
 
+import com.reconciliation.demo.service.config.ReconciliationServiceApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

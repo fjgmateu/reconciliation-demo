@@ -6,6 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.reconciliation.demo.data.domain.Shipment;
+import com.reconciliation.demo.data.repository.ShipmentRepository;
+import java.util.List;
+
 /**
  * Created by FJGMATEU
  */
@@ -20,12 +24,12 @@ public class ShipmentService implements IShipmentService {
 
     public Shipment find (final String reference) {
         logger.info("ShipmentService.findAll, reference: " + reference);
-        return shimentRepository.findByReference(reference);
+        return shipmentRepository.findByReference(reference);
     }
 
     public List<Shipment> findAll () {
-       logger.info("ShipmentService.findAll"));
-       return shipmentRepository.findAll());
+       logger.info("ShipmentService.findAll");
+       return shipmentRepository.findAll();
     }
 
 

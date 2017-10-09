@@ -4,6 +4,7 @@ import com.reconciliation.demo.service.client.ups.request.EventRequest;
 import com.reconciliation.demo.service.client.ups.response.Track;
 import com.reconciliation.demo.service.client.ups.response.Tracking;
 import com.reconciliation.demo.service.exception.ServiceClientException;
+import org.springframework.stereotype.Service;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,14 +43,14 @@ public class UPSCarrierClient {
 
         Tracking response = null;
         try {
-            URI targetUrl = UriComponentsBuilder.fromUriString(endPointUPSTracking).buildAndExpand(trackingNumber);
+            URI targetUrl = UriComponentsBuilder.fromUriString(endPointUPSTracking).buildAndExpand(trackingNumber).toUri();
             HttpEntity entity = new HttpEntity(new HttpHeaders());
             response = restTemplate.exchange(targetUrl, HttpMethod.GET, entity, Tracking.class).getBody();
             if (response==null){
-                throw new ServiceClientException("tracking no encontrado")
+                throw new ServiceClientException("tracking no encontrado");
             }
             if (CollectionUtils.isEmpty(response.getTracking())){
-                throw new ServiceClientException("tracking no encontrado")
+                throw new ServiceClientException("tracking no encontrado");
             }
 
         } catch (Exception e) {
@@ -57,7 +58,7 @@ public class UPSCarrierClient {
             logger.error("ERROR, CAUSE: {}", message);
             throw new ServiceClientException(message);
         }
-        return response;
+        return response.getTracking();
     }
 
 
@@ -65,7 +66,7 @@ public class UPSCarrierClient {
         try {
             URI targetUrl = UriComponentsBuilder.fromUriString(endPointUPSEvent).build().toUri();
             HttpEntity<EventRequest> entity = new HttpEntity(request, new HttpHeaders());
-            restTemplate.exchange(targetUrl, HttpMethod.POST, entity);
+            restTemplate.exchange(targetUrl, HttpMethod.POST, entity,Void.class);
         } catch (Exception e) {
             String message=ExceptionUtils.getMessage(e);
             logger.error("ERROR, CAUSE: {}", message);

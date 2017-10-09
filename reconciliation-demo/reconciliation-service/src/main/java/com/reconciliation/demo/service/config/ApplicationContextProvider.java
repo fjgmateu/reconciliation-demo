@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by angelica.torres on 15/03/2017.
+ * Created by FJGMATEU.
  */
 
 @Configuration

@@ -1,6 +1,6 @@
-package com.asefa.service.common.exception.checked;
+package com.reconciliation.demo.service.exception;
 
-
+import com.reconciliation.demo.service.exception.ServiceException;
 
 public class ServiceBusinessException extends ServiceException {
 
@@ -8,7 +8,7 @@ public class ServiceBusinessException extends ServiceException {
 
 	public ServiceBusinessException(String message, Throwable cause,
 									boolean enableSuppression, boolean writableStackTrace) {
-		super(errorDetail, message, cause, enableSuppression, writableStackTrace);
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 
 	public ServiceBusinessException(String message, Throwable cause) {

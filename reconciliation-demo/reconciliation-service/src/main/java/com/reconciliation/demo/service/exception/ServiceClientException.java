@@ -14,11 +14,11 @@ public class ServiceClientException extends ServiceException {
 	}
 
 	public ServiceClientException(String message) {
-		super(errorDetail, message);
+		super(message);
 	}
 
 	public ServiceClientException(Throwable cause) {
-		super(errorDetail, cause);
+		super(cause);
 	}
 
 	public ServiceClientException(ServiceException e) {

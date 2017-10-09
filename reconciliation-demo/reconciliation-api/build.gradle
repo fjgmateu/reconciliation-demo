@@ -7,7 +7,10 @@ buildscript {
     }
 
     repositories {
-        mavenCentral()
+        maven {
+            url "http://intcontinuades.asefa.es:8081/nexus/content/groups/public"
+        }
+        //mavenCentral()
     }
 
     dependencies {
@@ -37,12 +40,12 @@ dependencies {
 bootRun {
     systemProperties = System.properties
     doFirst {
-        def url = "https://raw.githubusercontent.com/fjgmateu/configuration/master/" + rootProject.name + "/" + profile + ".json"
+        //def url = "https://gitlab.asefa.es/microservices_configuration/" + rootProject.name + "/raw/master/" + profile + ".json"
 
         //println url
-        def properties = url.toURL().getText()
+        //def properties = url.toURL().getText()
 
-        //def properties =new File("C:\\prueba\\" + profile + ".json").getText()
+        def properties =new File("C:\\prueba\\" + profile + ".json").getText()
         println properties
         environment 'SPRING_APPLICATION_JSON', properties
     }

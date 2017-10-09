@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- *FJGMATEU
+ * Created by FJGMATEU
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CarrierSuccessRequest {

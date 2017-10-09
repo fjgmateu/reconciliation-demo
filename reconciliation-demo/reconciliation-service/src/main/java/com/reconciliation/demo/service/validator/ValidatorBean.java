@@ -15,6 +15,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+
+/**
+ * Created by FJGMATEU
+ */
 public class ValidatorBean {
 
     private Validator validator;

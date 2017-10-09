@@ -1,14 +1,18 @@
-package com.asefa.service.tarificacion.producto.etica.api.controller;
+package com.reconciliation.demo.api.controller;
 
-import com.asefa.service.tarificacion.producto.etica.service.domain.api.TarifaProductoResponse;
-import com.asefa.service.tarificacion.producto.etica.service.domain.api.TarifaProductoRequest;
-import com.asefa.service.tarificacion.producto.etica.service.impl.TarificacionProductoService;
+
+
+import com.reconciliation.demo.service.domain.api.CarrierSuccessRequest;
+import com.reconciliation.demo.service.impl.ReconciliationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 
 /**
- * Created by FJGMATEU on 16/06/2016.
+ * Created by FJGMATEU
  */
 @RestController
 public class ReconciliationController {
@@ -24,15 +28,15 @@ public class ReconciliationController {
 
     @CrossOrigin
     @RequestMapping(value = "/events/carrier_sucess", method = RequestMethod.POST)
-    public ResponseEntity<?> carrierSucess(@RequestBody ShipmentRequest input) {
+    public ResponseEntity<?> carrierSucess(@RequestBody CarrierSuccessRequest input) {
 
-        reconciliationService.carrierSucess(input);
+        reconciliationService.carrierSuccess(input);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/shipment/{id}")
-                .buildAndExpand(input.getId()).toUri();
+                .fromCurrentContextPath()
+                .path("/shipment/{id}")
+                .buildAndExpand(input.getPacklinkReference()).toUri();
 
         return ResponseEntity.created(location).build();
     }
-  .orElse(ResponseEntity.noContent().build());
 }

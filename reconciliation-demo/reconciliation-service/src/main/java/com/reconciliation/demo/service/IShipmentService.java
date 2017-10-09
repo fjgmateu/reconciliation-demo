@@ -5,7 +5,7 @@ import com.reconciliation.demo.data.domain.Shipment;
 import java.util.List;
 
 /**
- * FJGMATEU
+ * Created by FJGMATEU
  */
 public interface IShipmentService {
 

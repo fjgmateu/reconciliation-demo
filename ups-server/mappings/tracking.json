@@ -1,39 +1,39 @@
 {
     "request": {
         "method": "GET",
-        "url": "/tracking/ABCD123456"
+        "url": "/tracking/XYZ123"
     },
     "response": {
         "status": 200,
-        "bodyFileName": "ABCD123456.json"
+        "bodyFileName": "ABCD123456.json",
+		 "headers": {
+		  "Content-Type": "application/json"
+		}
     }
 },
 {
     "request": {
         "method": "GET",
-        "url": "/tracking/XYZ123456"
+        "url": "/tracking/AAA111"
     },
     "response": {
         "status": 200,
-        "bodyFileName": "XYZ123456.json"
+        "bodyFileName": "XYZ123456.json",
+		"headers": {
+		  "Content-Type": "application/json"
+		}
     }
 },
 {
     "request": {
         "method": "GET",
-        "url": "/tracking/XYZ998877"
+        "url": "/tracking/BBB112"
     },
     "response": {
         "status": 200,
-        "bodyFileName": "XYZ998877.json"
-    }
-},
-{
-    "request": {
-        "method": "POST",
-        "url": "/events"
-    },
-    "response": {
-        "status": 201
+        "bodyFileName": "XYZ998877.json",
+		"headers": {
+		  "Content-Type": "application/json"
+		}
     }
 }

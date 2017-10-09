@@ -1,5 +1,9 @@
 package com.reconciliation.demo.service.exception;
 
+
+/**
+ * Created by FJGMATEU
+ */
 public class ServiceDataException extends ServiceException {
 
 

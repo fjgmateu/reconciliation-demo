@@ -23,7 +23,7 @@ import java.net.URI;
 import java.util.List;
 
 /**
- *
+ * Created by FJGMATEU
  */
 @Service
 public class UPSCarrierClient {
@@ -47,16 +47,16 @@ public class UPSCarrierClient {
             HttpEntity entity = new HttpEntity(new HttpHeaders());
             response = restTemplate.exchange(targetUrl, HttpMethod.GET, entity, Tracking.class).getBody();
             if (response==null){
-                throw new ServiceClientException("tracking no encontrado");
+                throw new ServiceClientException("Tracking no encontrado,tracking_number="+trackingNumber);
             }
             if (CollectionUtils.isEmpty(response.getTracking())){
-                throw new ServiceClientException("tracking no encontrado");
+                throw new ServiceClientException("Tracking no encontrado,tracking_number="+trackingNumber);
             }
 
         } catch (Exception e) {
             String message=ExceptionUtils.getMessage(e);
             logger.error("ERROR, CAUSE: {}", message);
-            throw new ServiceClientException(message);
+            throw new ServiceClientException("Tracking no encontrado, tracking_number="+trackingNumber+", causa:"+message);
         }
         return response.getTracking();
     }

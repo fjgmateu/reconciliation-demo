@@ -4,9 +4,8 @@ package com.reconciliation.demo.service.domain.api;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- *FJGMATEU
+ * Created by FJGMATEU
  */
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Parcel {
 

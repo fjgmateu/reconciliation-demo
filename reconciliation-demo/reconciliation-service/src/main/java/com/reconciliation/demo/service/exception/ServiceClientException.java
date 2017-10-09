@@ -1,5 +1,9 @@
 package com.reconciliation.demo.service.exception;
 
+
+/**
+ * Created by FJGMATEU
+ */
 public class ServiceClientException extends ServiceException {
 
 	private static final long serialVersionUID = 3900485246853552467L;
@@ -14,11 +18,11 @@ public class ServiceClientException extends ServiceException {
 	}
 
 	public ServiceClientException(String message) {
-		super(errorDetail, message);
+		super(message);
 	}
 
 	public ServiceClientException(Throwable cause) {
-		super(errorDetail, cause);
+		super(cause);
 	}
 
 	public ServiceClientException(ServiceException e) {

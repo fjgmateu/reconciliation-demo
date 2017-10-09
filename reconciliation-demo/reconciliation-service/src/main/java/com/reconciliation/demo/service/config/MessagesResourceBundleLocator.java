@@ -4,7 +4,9 @@ import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
+/**
+ * Created by FJGMATEU
+ */
 public class MessagesResourceBundleLocator implements ResourceBundleLocator {
 
 	@Override

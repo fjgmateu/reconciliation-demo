@@ -1,5 +1,9 @@
 package com.reconciliation.demo.service.exception;
 
+
+/**
+ * Created by FJGMATEU
+ */
 public class ServiceException extends RuntimeException {
 
     private static final long serialVersionUID = -2095717599642667301L;

@@ -6,7 +6,7 @@ buildscript {
     }
 
     repositories {
-        mavenCentral()
+       mavenCentral()
     }
 
     dependencies {
@@ -24,6 +24,8 @@ jar {
 
 dependencies {
 
+    //Este no hace falta
+    //compile("org.springframework.boot:spring-boot-starter:${springBootVersion}")
     compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("com.fasterxml.jackson.core:jackson-databind:2.7.4")
 

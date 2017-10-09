@@ -17,6 +17,7 @@ buildscript {
 }
 
 jar {
+
     baseName = rootProject.name
 }
 
@@ -28,7 +29,6 @@ configurations {
 dependencies {
     compile project(":reconciliation-service")
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
     compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1'
 
 }
@@ -38,8 +38,11 @@ bootRun {
     systemProperties = System.properties
     doFirst {
         def url = "https://raw.githubusercontent.com/fjgmateu/configuration/master/" + rootProject.name + "/" + profile + ".json"
-        println url
-       // def properties = url.toURL().getText(requestProperties: ['PRIVATE-TOKEN': 's8bcngzUXwgppLHKUM9h'])
+
+        //println url
+        def properties = url.toURL().getText()
+
+        //def properties =new File("C:\\prueba\\" + profile + ".json").getText()
         println properties
         environment 'SPRING_APPLICATION_JSON', properties
     }

@@ -1,5 +1,9 @@
 package com.reconciliation.demo.service.exception;
 
+
+/**
+ * Created by FJGMATEU
+ */
 public class ServiceValidationException extends ServiceException {
 
     private static final long serialVersionUID = -98352873324887177L;

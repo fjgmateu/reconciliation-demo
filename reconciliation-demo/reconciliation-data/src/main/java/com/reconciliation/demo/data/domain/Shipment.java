@@ -1,10 +1,12 @@
 package com.reconciliation.demo.data.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 
@@ -13,6 +15,8 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection="shipment")
+@XmlRootElement(name = "shipment")
+@JsonRootName("shipment")
 public class Shipment {
 
     @Id
@@ -23,6 +27,9 @@ public class Shipment {
 	
 	@Field("state")
     private String state;
+
+    public Shipment() {
+    }
 
     public Shipment(String reference, int parcels, String state) {
         this.reference = reference;

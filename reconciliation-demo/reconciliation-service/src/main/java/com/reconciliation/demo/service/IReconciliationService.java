@@ -7,5 +7,5 @@ import com.reconciliation.demo.service.domain.api.CarrierSuccessRequest;
  */
 public interface IReconciliationService {
 
-    public void carrierSuccess (final CarrierSuccessRequest input);
+    public boolean carrierSuccess (final CarrierSuccessRequest input);
 }

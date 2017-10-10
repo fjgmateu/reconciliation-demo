@@ -43,7 +43,7 @@ public class CarrierSuccessRequest {
         return packlinkReference;
     }
 
-    public void setPacklinkReferenc(String packlinkReference) {
+    public void setPacklinkReference(String packlinkReference) {
         this.packlinkReference = packlinkReference;
     }
 

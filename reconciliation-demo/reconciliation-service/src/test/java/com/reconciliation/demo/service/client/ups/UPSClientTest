@@ -1,0 +1,77 @@
+package com.reconciliation.demo.service.client.ups;
+
+import com.google.gson.Gson;
+import com.reconciliation.demo.service.client.ups.response.Track;
+import com.reconciliation.demo.service.client.ups.response.Tracking;
+import com.reconciliation.demo.service.config.ReconciliationServiceApplication;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.client.MockRestServiceServer;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import static org.junit.Assert.assertFalse;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
+
+/**
+ *  FJGMATEU
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = ReconciliationServiceApplication.class)
+public class UPSClientTest {
+
+    @Autowired
+    private UPSCarrierClient client;
+
+    @Autowired
+    private MockRestServiceServer server;
+
+    @Autowired
+    private Gson gson;
+
+    @Before
+    public void setUp() throws Exception {
+        Tracking tracking=new Tracking();
+        List<Track> tracks=new ArrayList<Track>();
+
+        Track track=new Track();
+        track.setPackingReference("ABCD123456");
+        track.setParcels(1);
+        track.setWeight(0.5);
+        track.setStatus("DELIVERED");
+        tracks.add(track);
+
+        track=new Track();
+        track.setPackingReference("ABCD123456");
+        track.setParcels(1);
+        track.setWeight(0.225);
+        track.setStatus("WAITING IN HUB");
+        tracks.add(track);
+
+        tracking.setTracking(tracks);
+
+
+        String detailsString =gson.toJson(tracking);
+
+        this.server.expect(requestTo("/tracking/ABCD123456"))
+              .andRespond(withSuccess(detailsString, MediaType.APPLICATION_JSON));
+    }
+    @Test
+    public void whenCallingGetTracking_thenClientMakesCorrectCall()
+          throws Exception {
+
+        List<Track> tracking= this.client.findTracking("ABCD123456");
+        assertFalse(CollectionUtils.isEmpty(tracking));
+    }
+}

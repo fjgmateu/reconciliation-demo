@@ -28,8 +28,16 @@ configurations {
 
 dependencies {
     compile project(":reconciliation-service")
+
+    compile group: 'org.springframework', name: 'spring-core'
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
     compile group: 'javax.ws.rs', name: 'javax.ws.rs-api', version: '2.0.1'
+    compile("com.google.code.gson:gson:2.6.2")
+
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile group: 'org.springframework.security', name: 'spring-security-test'
+    testCompile group: 'junit', name: 'junit'
+
 
 }
 
@@ -40,7 +48,22 @@ bootRun {
         def url = "https://raw.githubusercontent.com/fjgmateu/configuration/master/" + rootProject.name + "/" + profile + ".json"
 
         //println url
-        def properties = url.toURL().getText()
+        //def properties = url.toURL().getText()
+
+        //def properties =new File("C:\\prueba\\" + profile + ".json").getText()
+        println properties
+        environment 'SPRING_APPLICATION_JSON', properties
+    }
+}
+
+
+test {
+    systemProperties = System.properties
+    doFirst {
+        def url = "https://raw.githubusercontent.com/fjgmateu/configuration/master/" + rootProject.name + "/" + profile + ".json"
+
+        //println url
+        //def properties = url.toURL().getText()
 
         //def properties =new File("C:\\prueba\\" + profile + ".json").getText()
         println properties

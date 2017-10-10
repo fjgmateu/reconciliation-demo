@@ -43,7 +43,7 @@ public class ReconciliationService implements IReconciliationService {
     private ITrackingHandler carrierHandler;
 
 
-    public void carrierSuccess (final CarrierSuccessRequest input) {
+    public boolean carrierSuccess (final CarrierSuccessRequest input) {
         logger.info("ReconciliationService.carrierSucess, input: " + input);
         reconciliationValidator.validate(input);
         Shipment shipment=new Shipment(input.getPacklinkReference(),input.getParcels().size(), PENDING);
@@ -60,6 +60,7 @@ public class ReconciliationService implements IReconciliationService {
             shipment.setState(CONCILIATION);
             shipmentRepository.save(shipment);
         }
+        return reconciliation;
     }
 
 

@@ -37,16 +37,12 @@ public class UPSTrackingHandler implements ITrackingHandler {
 
 
         if (track!=null) {
-
             EventRequest eventRequest = new EventRequest(RECONCILIATION_EVENT,
                     trackingReference,
                     parcels,
                     weight);
 
-            if (track != null) {
-                syncUpsCarrierClient.sendEvent(eventRequest);
-
-            }
+            syncUpsCarrierClient.sendEvent(eventRequest);
             return true;
         }
         return false;

@@ -1,5 +1,6 @@
 package com.reconciliation.demo.service.impl;
 
+import com.reconciliation.demo.data.repository.ShipmentRedisRepository;
 import com.reconciliation.demo.data.repository.ShipmentRepository;
 import com.reconciliation.demo.service.IShipmentService;
 import org.slf4j.Logger;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.reconciliation.demo.data.domain.Shipment;
-import com.reconciliation.demo.data.repository.ShipmentRepository;
+
 import java.util.List;
 
 /**
@@ -22,6 +23,8 @@ public class ShipmentService implements IShipmentService {
     @Autowired
     private ShipmentRepository shipmentRepository;
 
+    //@Autowired
+    //private ShipmentRedisRepository shipmentRepository;
 
     public Shipment find (final String reference) {
         logger.info("ShipmentService.findAll, reference: " + reference);

@@ -1,6 +1,7 @@
 package com.reconciliation.demo.service.impl;
 
 import com.reconciliation.demo.data.domain.Shipment;
+import com.reconciliation.demo.data.repository.ShipmentRedisRepository;
 import com.reconciliation.demo.data.repository.ShipmentRepository;
 import com.reconciliation.demo.service.IReconciliationService;
 import com.reconciliation.demo.service.config.ApplicationContextProvider;
@@ -25,7 +26,10 @@ public class ReconciliationService implements IReconciliationService {
     private final Logger logger = LoggerFactory.getLogger(ReconciliationService.class);
 
     @Autowired
-     private ShipmentRepository shipmentRepository;
+    private ShipmentRepository shipmentRepository;
+
+    //@Autowired
+    //private ShipmentRedisRepository shipmentRepository;
 
     @Autowired
     private ReconciliationValidator reconciliationValidator;

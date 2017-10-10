@@ -21,6 +21,7 @@ jar {
 	baseName = 'reconciliation-service'
 }
 
+
 dependencies {
 
     compile project(":reconciliation-data")

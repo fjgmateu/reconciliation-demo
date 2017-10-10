@@ -1,9 +1,16 @@
 package com.reconciliation.demo.data.config;
 
 import java.io.IOException;
-//import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
+import java.util.Date;
+import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
 import com.mongodb.Mongo;
 import cz.jirutka.spring.embedmongo.EmbeddedMongoFactoryBean;
+import de.flapdoodle.embed.mongo.MongodExecutable;
+import de.flapdoodle.embed.mongo.MongodProcess;
+import de.flapdoodle.embed.mongo.MongodStarter;
+import de.flapdoodle.embed.mongo.config.*;
+import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.process.runtime.Network;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,10 +24,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * Created by FJGMATEU
  */
 
+
 @Configuration
-/*
-@EnableMongoRepositories("com.reconciliation.demo.data")
-public class MongoDBConfig extends AbstractMongoConfiguration {*/
 @EnableMongoRepositories("com.reconciliation.demo.data")
 public class MongoDBConfig{
 
@@ -37,26 +42,11 @@ public class MongoDBConfig{
     @Bean
     public MongoTemplate mongoTemplate() throws IOException {
         EmbeddedMongoFactoryBean mongo = new EmbeddedMongoFactoryBean();
+        mongo.setVersion("3.2.2");
         mongo.setBindIp(mongoHost);
+        mongo.setPort(new Integer(mongoPort));
         MongoClient mongoClient = mongo.getObject();
         MongoTemplate mongoTemplate = new MongoTemplate(mongoClient, mongoDB);
-       return mongoTemplate;
+        return mongoTemplate;
     }
-
-    /*
-    @Override
-    public MongoMappingContext mongoMappingContext()
-          throws ClassNotFoundException {
-        return super.mongoMappingContext();
-    }
-    @Override
-    @Bean
-    public Mongo mongo() throws Exception {
-        return new MongoClient(mongoHost + ":" + mongoPort);
-    }
-    @Override
-    protected String getDatabaseName() {
-        return mongoDB;
-    }
-    */
 }

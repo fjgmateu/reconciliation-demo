@@ -1,125 +1,52 @@
 # Packlink Engineering coding test
 
-## Instructions
+## Tecnologias
 
-1. Fork and Clone this repo
-2. Work on the requirements
-3. Do a PR with your code and any other needed information
-4. Send an email notifying us
+1. Java 8 y SpringBoot 
+2. Base de datos documental MongoDB. Embebida (Se contempla Redis)
+3. Server Rest, WireMock
+4. Gestor de configuración gradle
 
-### What we will look for
-We want to see your proficency writing code. How you structre it, how you test.
-While a working application is a big plus, if not working please submit it anyway.
 
-### Technology Requirements
+### Perfiles de configuración
 
-- JVM language (Java and/or Scala preferred)
-- Use of a framework (Spring+Boot preferred)
-- Tests
-- The application has to be self-contained. That is, should not depend on extenernal conections not provided with it.
+Se realiza un perfil de configuración en formato JSON en repositorio https://github.com/fjgmateu/configuration.git.
 
-### Storage
-Use whatever storage you find suitable for this test. Remember that the 
-application has to be self-contained.
+El servicio obtendrá la configuración en función del perfil asociado. Esto permite una gestión de configuración en función del entorno dónse se ejecutara
 
-## Context of the problem to solve
-We work with multiple logistic services providers. They scan the parcels sent
-with Packlink. Some times there's a difference between what our clients declare 
-and what the provider scans. 
+Las tareas gradle se ejecutarán con el perfil como parámetro. Ejemplo  gradle bootRun -Pprofile=test
 
-This is called a "weight deviation".
+### Almacenamiento
 
-### The task at hand
+El almacenamiento lo ha realizado con un mongoDB embebido, ya que se requería que fuera standalone.
 
-Create a microservice to recover scanned information from a Carrier and **dispatch** a `reconciliation.item.parse.success`
-event when appropiate.
+En entorno windows 64 funciona correctamente, aunque puede que deje el puerto enganchado cuando se cierre. Si esto ocurre, arrancar el microservicio de nuevo
 
-The information from the carriers can be tricky. In the Resources section you will
-find examples of tracking information.
+Se valoró como almacenamiento Redis, por lo que existe un repositorio adaptado a Redis, el cual sería también embebido.
 
-The microservice will be receiving events in the form of POST requests:
+### Servicio mock del Carrier
 
-- When there is a succesfull integration with a carrier: `carrier.order.success`
+Se simula el servicio del carrier mediante WireMock.
 
-  to the route: `http://localhost:8055/events/carrier_success` (see more in the [resources](#resources) section)
-  With the information of this event the application should call the carrier endpoint for tracking information (see below).
+Para su lanzamiento, en el repositorio https://github.com/fjgmateu/reconciliation-demo.git, en la carpeta ups-server  realizar la siguiente invocación: java -jar wiremock-standalone-2.8.0.jar --port 8056.
 
-- For the sake of this exercise we will assume that the carrier endpoint is `https://example.com/tracking/{tracking_number}`
- (where `{tracking_number}` is a placeholder for the actual tracking_number for that shipment, found in the
-  `carrier.order.success` event above).
+En la carpeta mappings se encuentra las respuestas simuladas por el servidor.
 
-**The microservice should**:
+### Excepciones
 
-- Listen to port 8055
-- Have HTTP endpoints for receiving the events (see above)
-- Have HTTP endpoint/s to
-  - retrieve received shipments in the route `http://localhost:8055/shipments`, with payload like:
-    ```javascript
-      {"shipments":[
-        {
-          "reference":"ABCD123456",
-          "parcels":1,
-          "state":<states>
-        }
-       ]
-      }
-    ```
-    where *states* can be:
+El control de excepciones se realiza con un controlador @ControllerAdvice ReconciliationExceptionHandler. 
+Todas las excepciones son capturadas por el controlador, lanzando el correspondiente código HTTP asociada al tipo de excepción producida.
 
-      - "pending" : Reconciliation pending, we received a `carrier.order.success` event for that shipment
 
-      - "sent_for_concilliation" : Request for reconciliation by dispatching an event (see below)
+### Extensión a otros carriers.
 
-- Simulate the carrier endpoint, returning the sample data ([examples](#resources)).
-- Dispatch `reconciliation.item.parse.success` event.
+Para hacer extensible el servicio  a más transportistas, cada carrier tiene un manejador que implementa la interfaz ITrackingHandler, invocando al manejador de cada transportista de manera dinámica con un resolver.
 
-  Every carrier has it's own states. In the [resources/tracking](/resources/tracking/) folder of this repo you will find examples of tracking information for one carrier, with a "final" state
-  to use as flag to trigger the concilliation event dispatch.
-  
-  *Please provide an implementation in a way that would be extensible to add more carriers and it's final states*
-  
-  Can be an application event or a fake publisher.
+### Funcionamiento
 
-And remember, things can go wrong. Information can be incomplete and systems will fail.
+El funcionamiento del servicio que se ha deducido que se pretendía es el siguiente:
 
-#### Resources
-
-##### Payload of `reconciliation.item.parse.success` event
-
-```javascript
-{
-  "event":"reconciliation.item.parse.sucess",
-  "reference":"ABCD123456",
-  "parcels":1,
-  "weight":0.5
-}
-```
-
-##### Carrier's scanned information is available in a JSON+REST API. 
-
-Final state for UPS carrier is `DELIVERED`
-
-See [here](/resources/tracking/ups) 3 examples.
-
-##### Events
-
-1. `carrier.order.success`
-When a shipment has been succesfully integrated with a given carrier.
-```javascript
-{
-  "packlink_reference":"ABCD123456",
-  "parcels" : [
-  {
-    "weight":1,
-    "width": 10,
-    "height": 10,
-    "lenght": 10
-  }
-  ],
-  "carrier":"UPS",
-  "service_id":"28123",
-  "integration_code":"UPS_ES_A",
-  "traking_numbers":["XYZ123"]
-}
-```
-See [here](/resources/carrier_success_events) 3 examples.
+1. Llega un evento carrier_sucess, se almacena el shipment con estado 'pending'. (La respuesta de este endpoint es un http code 201 con una cabecera Location:http://localhost/shipment/XXXX para la recuperación mediante un GET por parte del cliente)
+2. Se incova al servicio del carrier para obtener el tracking (mock server).
+   2.1  Si existe un estado final, y hay coincidencia en peso y número de paquetes, se modifica el shipment a estado 'send_for_conciliation'
+3. Se invoca al servicio del carrier, indicando el evento de conciliación en su sistema mediante una petición POST.

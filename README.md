@@ -46,7 +46,8 @@ Para hacer extensible el servicio  a más transportistas, cada carrier tiene un 
 
 El funcionamiento del servicio que se ha deducido que se pretendía es el siguiente:
 
-1. Llega un evento carrier_sucess, se almacena el shipment con estado 'pending'. (La respuesta de este endpoint es un http code 201 con una cabecera Location:http://localhost/shipment/XXXX para la recuperación mediante un GET por parte del cliente)
+1. Llega un evento carrier_sucess y se almacena el shipment con estado 'pending'. 
 2. Se incova al servicio del carrier para obtener el tracking (mock server).
    2.1  Si existe un estado final, y hay coincidencia en peso y número de paquetes, se modifica el shipment a estado 'send_for_conciliation'
 3. Se invoca al servicio del carrier, indicando el evento de conciliación en su sistema mediante una petición POST.
+4. La respuesta es un http code 201 con una cabecera Location:http://localhost/shipment/XXXX para la recuperación mediante un GET por parte del cliente
